@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Welcome extends StatelessWidget {
-  const Welcome({Key? key}) : super(key: key);
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -35,12 +36,14 @@ class Welcome extends StatelessWidget {
                 child: MaterialButton(
                   minWidth: 300,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'signInScreen');
+                  },
                   color: const Color(0xff5ED5A8),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: const Text(
-                    "LOGIN",
+                    "SIGN IN",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -60,7 +63,7 @@ class Welcome extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: const Text(
-                    "SIGN IN",
+                    "SIGN UP",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

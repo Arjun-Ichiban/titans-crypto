@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/screens/signIn.dart';
 import 'package:titans_crypto/screens/welcome.dart';
 
 void main() {
@@ -15,10 +16,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: const Color(0xff5ED5A8),
-        scaffoldBackgroundColor: const Color(0xff1B232A)
+        scaffoldBackgroundColor: const Color(0xff1B232A),
       ),
-      home: const Welcome(),
+      home: const WelcomeScreen(),
+      routes: {
+        'signInScreen': (context) => SignInScreen(),
+      },
     );
   }
 }
-
