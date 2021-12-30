@@ -58,7 +58,9 @@ class WelcomeScreen extends StatelessWidget {
                 child: MaterialButton(
                   minWidth: 300,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'signUpScreen');
+                  },
                   color: const Color(0xff5ED5A8),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),

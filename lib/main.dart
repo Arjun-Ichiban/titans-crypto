@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:titans_crypto/screens/signIn.dart';
+import 'package:titans_crypto/screens/signUp.dart';
 import 'package:titans_crypto/screens/welcome.dart';
 
 void main() {
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const WelcomeScreen(),
       routes: {
+        'welcomeScreen': (context) => WelcomeScreen(),
         'signInScreen': (context) => SignInScreen(),
+        'signUpScreen': (context) => SignUpScreen(),
       },
     );
   }
