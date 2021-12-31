@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/screens/buy.dart';
 import 'package:titans_crypto/screens/signIn.dart';
 import 'package:titans_crypto/screens/signUp.dart';
 import 'package:titans_crypto/screens/welcome.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         'welcomeScreen': (context) => WelcomeScreen(),
         'signInScreen': (context) => SignInScreen(),
         'signUpScreen': (context) => SignUpScreen(),
+        'buyScreen' : (context) => BuyScreen(),
       },
     );
   }

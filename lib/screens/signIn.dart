@@ -180,7 +180,7 @@ class SignInScreen extends StatelessWidget {
                     minWidth: 300,
                     height: 60,
                     onPressed: () {
-                      Navigator.pushNamed(context, 'signInScreen');
+                      Navigator.pushNamed(context, 'buyScreen');
                     },
                     color: const Color(0xff5ED5A8),
                     shape: RoundedRectangleBorder(
