@@ -68,6 +68,18 @@ class _BuyScreenState extends State<BuyScreen> {
             color: Color(0xff5ED5A8),
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('walletScreen');
+            },
+            icon: const Icon(
+              Icons.arrow_forward_ios,
+              size: 35,
+              color: Color(0xff5ED5A8),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -133,7 +145,7 @@ class _BuyScreenState extends State<BuyScreen> {
                     itemBuilder: (context, position) {
                       return Container(
                         padding:
-                            const EdgeInsets.only(left: 20, top: 29, right: 10),
+                            const EdgeInsets.only(left: 20, top: 29, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SellScreen extends StatefulWidget {
-  const SellScreen({Key? key}) : super(key: key);
+class WalletScreen extends StatefulWidget {
+  const WalletScreen({Key? key}) : super(key: key);
 
   @override
-  _SellScreenState createState() => _SellScreenState();
+  _WalletScreenState createState() => _WalletScreenState();
 }
 
-class _SellScreenState extends State<SellScreen> {
+class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,69 +27,96 @@ class _SellScreenState extends State<SellScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: 640,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 10,
                 ),
-                Center(
-                  child: Container(
-                    height: 50,
-                    //color: const Color(0xff161C22),
-                    width: 366,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff161C22),
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        MaterialButton(
-                          minWidth: 179,
-                          height: 38,
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('buyScreen');
-                          },
-                          color: const Color(0xff161C22),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          child: const Text(
-                            "Buy",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: Color(0xff777777)),
-                          ),
-                        ),
-                        MaterialButton(
-                          minWidth: 179,
-                          height: 38,
-                          onPressed: () {},
-                          color: const Color(0xff1B232A),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          child: const Text(
-                            "Sell",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: Color(0xffC1C7CD)),
-                          ),
-                        ),
-                      ],
-                    ),
+                Text(
+                  "Current Balance",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: const Color(0xff777777),
                   ),
                 ),
-                Expanded(
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "\u{20B9} 40,095.00",
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Colors.white,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 29, right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        "assets/images/rupee.png",
+                        height: 42,
+                        width: 42,
+                      ),
+                      const SizedBox(
+                        width: 13,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Rupee",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "INR",
+                            style: TextStyle(
+                              color: Color(0xff777777),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Text(
+                        "47680.00",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Coin Balance",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: const Color(0xff777777),
+                  ),
+                ),
+                SizedBox(
+                  height: 450,
                   child: ListView.builder(
                     itemBuilder: (context, position) {
                       return Container(
                         padding:
-                            const EdgeInsets.only(left: 20, top: 29, right: 20),
+                        const EdgeInsets.only(top: 20, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -124,22 +151,12 @@ class _SellScreenState extends State<SellScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              width: 62,
-                            ),
-                            Image.asset(
-                              "assets/images/increasing.png",
-                              height: 31,
-                              width: 91,
-                            ),
-                            const SizedBox(
-                              width: 35,
-                            ),
+                           const Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
                                 Text(
-                                  "47680.00",
+                                  "32697.00",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -150,9 +167,9 @@ class _SellScreenState extends State<SellScreen> {
                                   height: 5,
                                 ),
                                 Text(
-                                  "-0.18%",
+                                  "\u{20B9} 468,096.00",
                                   style: TextStyle(
-                                    color: Color(0xff5ED5A8),
+                                    color: Color(0xff777777),
                                     fontSize: 14,
                                   ),
                                 ),
@@ -169,7 +186,6 @@ class _SellScreenState extends State<SellScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(),
     );
   }
 }
