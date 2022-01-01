@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/screens/activity.dart';
 import 'package:titans_crypto/screens/buy.dart';
 import 'package:titans_crypto/screens/sell.dart';
 import 'package:titans_crypto/screens/signIn.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Titans Crypto',
       theme: ThemeData(
         primaryColor: const Color(0xff5ED5A8),
         scaffoldBackgroundColor: const Color(0xff1B232A),
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         'buyScreen': (context) => BuyScreen(),
         'sellScreen': (context) => SellScreen(),
         'walletScreen': (context) => WalletScreen(),
+        'activityScreen': (context) => ActivityScreen(),
       },
     );
   }

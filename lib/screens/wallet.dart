@@ -24,6 +24,18 @@ class _WalletScreenState extends State<WalletScreen> {
             color: Color(0xff5ED5A8),
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('activityScreen');
+            },
+            icon: const Icon(
+              Icons.arrow_forward_ios,
+              size: 35,
+              color: Color(0xff5ED5A8),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

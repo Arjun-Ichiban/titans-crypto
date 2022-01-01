@@ -71,7 +71,7 @@ class _BuyScreenState extends State<BuyScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed('walletScreen');
+              Navigator.of(context).pushNamed('walletScreen');
             },
             icon: const Icon(
               Icons.arrow_forward_ios,
