@@ -60,7 +60,7 @@ class _BuyScreenState extends State<BuyScreen> {
         backgroundColor: const Color(0xff1B232A),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, 'profileScreen');
           },
           icon: const Icon(
             Icons.account_circle_outlined,
