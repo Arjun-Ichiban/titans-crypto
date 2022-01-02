@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 220,
+                height: 230,
               ),
               const Center(
                 child: Text(
@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 230,
+                height: 220,
               ),
               Center(
                 child: MaterialButton(
@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: const Text(
-                    "SIGN IN",
+                    "Sign In",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -65,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: const Text(
-                    "SIGN UP",
+                    "Sign Up",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
