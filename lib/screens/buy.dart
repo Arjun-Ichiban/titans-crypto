@@ -77,7 +77,7 @@ class _BuyScreenState extends State<BuyScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
+            onPressed: () {
               Navigator.of(context).pushNamed('walletScreen');
             },
             icon: const Icon(
@@ -192,8 +192,8 @@ class _BuyScreenState extends State<BuyScreen> {
                             ),
                             Image.asset(
                               "assets/images/increasing.png",
-                              height: 31,
-                              width: 91,
+                              height: 33,
+                              width: 93,
                             ),
                             // const SizedBox(
                             //   width: 35,
