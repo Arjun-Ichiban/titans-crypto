@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../assets/constants.dart' as constants;
 
 var logger = Logger();
@@ -102,149 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 17),
                   child: SignUpForm(),
-                  //   child: Column(
-                  //     children: [
-                  //       Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Text(
-                  //             "Username",
-                  //             style: TextStyle(
-                  //               color: Color(0xffA7AFB7),
-                  //               fontSize: 16,
-                  //             ),
-                  //           ),
-                  //           const SizedBox(
-                  //             height: 20,
-                  //           ),
-                  //           TextField(
-                  //             style: const TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //             onChanged: (value) {},
-                  //             cursorColor: const Color(0xff5ED5A8),
-                  //             decoration: InputDecoration(
-                  //               hintText: 'Enter Your Username',
-                  //               hintStyle:
-                  //                   const TextStyle(color: Color(0xff777777)),
-                  //               fillColor: const Color(0xff161C22),
-                  //               filled: true,
-                  //               contentPadding: const EdgeInsets.symmetric(
-                  //                   vertical: 0, horizontal: 10),
-                  //               focusedBorder: UnderlineInputBorder(
-                  //                 borderSide: const BorderSide(
-                  //                     color: Color(0xff5ED5A8), width: 2.0),
-                  //                 borderRadius: BorderRadius.circular(12.0),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       const SizedBox(
-                  //         height: 30,
-                  //       ),
-                  //       Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Text(
-                  //             "Email",
-                  //             style: TextStyle(
-                  //               color: Color(0xffA7AFB7),
-                  //               fontSize: 16,
-                  //             ),
-                  //           ),
-                  //           const SizedBox(
-                  //             height: 20,
-                  //           ),
-                  //           TextField(
-                  //             style: const TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //             onChanged: (value) {},
-                  //             cursorColor: const Color(0xff5ED5A8),
-                  //             decoration: InputDecoration(
-                  //               hintText: 'Enter Your Email',
-                  //               hintStyle:
-                  //                   const TextStyle(color: Color(0xff777777)),
-                  //               fillColor: const Color(0xff161C22),
-                  //               filled: true,
-                  //               contentPadding: const EdgeInsets.symmetric(
-                  //                   vertical: 0, horizontal: 10),
-                  //               focusedBorder: UnderlineInputBorder(
-                  //                 borderSide: const BorderSide(
-                  //                     color: Color(0xff5ED5A8), width: 2.0),
-                  //                 borderRadius: BorderRadius.circular(12.0),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       const SizedBox(
-                  //         height: 30,
-                  //       ),
-                  //       Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Text(
-                  //             "Password",
-                  //             style: TextStyle(
-                  //               color: Color(0xffA7AFB7),
-                  //               fontSize: 16,
-                  //             ),
-                  //           ),
-                  //           const SizedBox(
-                  //             height: 20,
-                  //           ),
-                  //           TextField(
-                  //             style: const TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //             onChanged: (value) {},
-                  //             cursorColor: const Color(0xff5ED5A8),
-                  //             decoration: InputDecoration(
-                  //               hintText: 'Enter Your Password',
-                  //               hintStyle:
-                  //                   const TextStyle(color: Color(0xff777777)),
-                  //               fillColor: const Color(0xff161C22),
-                  //               filled: true,
-                  //               contentPadding: const EdgeInsets.symmetric(
-                  //                   vertical: 0, horizontal: 10),
-                  //               focusedBorder: UnderlineInputBorder(
-                  //                 borderSide: const BorderSide(
-                  //                     color: Color(0xff5ED5A8), width: 2.0),
-                  //                 borderRadius: BorderRadius.circular(12.0),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 50,
-                  // ),
-                  // Center(
-                  //   child: MaterialButton(
-                  //     minWidth: 300,
-                  //     height: 60,
-                  //     onPressed: () {
-                  //       Navigator.pushNamed(context, 'signInScreen');
-                  //     },
-                  //     color: const Color(0xff5ED5A8),
-                  //     shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(16)),
-                  //     child: const Text(
-                  //       "Sign In",
-                  //       style: TextStyle(
-                  //           fontWeight: FontWeight.w400,
-                  //           fontSize: 16,
-                  //           color: Colors.black),
-                  //     ),
-                  //   ),
                 ),
               ],
             ),
@@ -273,7 +134,7 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      //autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           Column(
@@ -293,7 +154,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 style: const TextStyle(
                   color: Colors.white,
                 ),
-                onChanged: (value) {},
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Username cannot be empty';
@@ -341,7 +201,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 style: const TextStyle(
                   color: Colors.white,
                 ),
-                onChanged: (value) {},
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Email cannot be empty';
@@ -390,7 +249,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   color: Colors.white,
                 ),
                 obscureText: true,
-                onChanged: (value) {},
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Password cannot be empty';
@@ -432,8 +290,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  logger.i([username,email,password]);
-                  createUser(username, email, password);
+                  logger.i([username, email, password]);
+                  createUser(context, username, email, password);
                 }
               },
               color: const Color(0xff5ED5A8),
@@ -454,21 +312,31 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 }
 
-createUser(username, email, password) async {
+createUser(context, username, email, password) async {
   final http.Response response = await http.post(
-    Uri.parse(url + "/"),
+    Uri.parse(url + "/user/create"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
       'username': username,
-      'email' : email,
+      'email': email,
       'password': password
     }),
   );
   if (response.statusCode == 200) {
     logger.i(response.body);
+    Map<String, dynamic> res = jsonDecode(response.body);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('user_id', res['user_id']);
+    logger.i(res['user_id']);
+    Navigator.of(context).pushReplacementNamed('buyScreen');
   } else {
-    logger.e('Failed to create album.');
+    logger.e('Failed to create user.');
+    final snackBar = SnackBar(
+      content: const Text('Failed to Sign Up'),
+      backgroundColor: Colors.red[500],
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

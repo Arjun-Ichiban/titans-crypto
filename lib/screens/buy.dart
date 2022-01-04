@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../assets/constants.dart' as constants;
+
+var logger = Logger();
+const String url = constants.serverUrl;
 
 class BuyScreen extends StatefulWidget {
   const BuyScreen({Key? key}) : super(key: key);
@@ -70,7 +77,7 @@ class _BuyScreenState extends State<BuyScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).pushNamed('walletScreen');
             },
             icon: const Icon(
@@ -151,8 +158,8 @@ class _BuyScreenState extends State<BuyScreen> {
                           children: [
                             Image.network(
                               "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-                              height: 42,
-                              width: 42,
+                              height: 44,
+                              width: 44,
                             ),
                             const SizedBox(
                               width: 13,
@@ -165,32 +172,33 @@ class _BuyScreenState extends State<BuyScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 7,
                                 ),
                                 Text(
                                   "BTC",
                                   style: TextStyle(
                                     color: Color(0xff777777),
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              width: 62,
+                              width: 58,
                             ),
                             Image.asset(
                               "assets/images/increasing.png",
                               height: 31,
                               width: 91,
                             ),
-                            const SizedBox(
-                              width: 35,
-                            ),
+                            // const SizedBox(
+                            //   width: 35,
+                            // ),
+                            Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
@@ -199,17 +207,17 @@ class _BuyScreenState extends State<BuyScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 7,
                                 ),
                                 Text(
                                   "-0.18%",
                                   style: TextStyle(
                                     color: Color(0xff5ED5A8),
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],

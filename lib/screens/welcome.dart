@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
               Center(
                 child: MaterialButton(

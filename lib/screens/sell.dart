@@ -95,8 +95,8 @@ class _SellScreenState extends State<SellScreen> {
                           children: [
                             Image.network(
                               "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-                              height: 42,
-                              width: 42,
+                              height: 44,
+                              width: 44,
                             ),
                             const SizedBox(
                               width: 13,
@@ -109,32 +109,33 @@ class _SellScreenState extends State<SellScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 7,
                                 ),
                                 Text(
                                   "BTC",
                                   style: TextStyle(
                                     color: Color(0xff777777),
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              width: 62,
+                              width: 58,
                             ),
                             Image.asset(
                               "assets/images/increasing.png",
                               height: 31,
                               width: 91,
                             ),
-                            const SizedBox(
-                              width: 35,
-                            ),
+                            // const SizedBox(
+                            //   width: 35,
+                            // ),
+                            Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
@@ -143,17 +144,17 @@ class _SellScreenState extends State<SellScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 7,
                                 ),
                                 Text(
                                   "-0.18%",
                                   style: TextStyle(
                                     color: Color(0xff5ED5A8),
-                                    fontSize: 14,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
