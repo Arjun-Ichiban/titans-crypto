@@ -106,108 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17),
                   child: SignInForm(),
-                  // child: Column(
-                  //   children: [
-                  //     Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         const Text(
-                  //           "Email",
-                  //           style: TextStyle(
-                  //             color: Color(0xffA7AFB7),
-                  //             fontSize: 16,
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 20,
-                  //         ),
-                  //         TextField(
-                  //           style: const TextStyle(
-                  //             color: Colors.white,
-                  //           ),
-                  //           onChanged: (value) {},
-                  //           cursorColor: const Color(0xff5ED5A8),
-                  //           decoration: InputDecoration(
-                  //             hintText: 'Enter Your Email',
-                  //             hintStyle:
-                  //                 const TextStyle(color: Color(0xff777777)),
-                  //             fillColor: const Color(0xff161C22),
-                  //             filled: true,
-                  //             contentPadding: const EdgeInsets.symmetric(
-                  //                 vertical: 0, horizontal: 10),
-                  //             focusedBorder: UnderlineInputBorder(
-                  //               borderSide: const BorderSide(
-                  //                   color: Color(0xff5ED5A8), width: 2.0),
-                  //               borderRadius: BorderRadius.circular(12.0),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     const SizedBox(
-                  //       height: 40,
-                  //     ),
-                  //     Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         const Text(
-                  //           "Password",
-                  //           style: TextStyle(
-                  //             color: Color(0xffA7AFB7),
-                  //             fontSize: 16,
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 20,
-                  //         ),
-                  //         TextField(
-                  //           style: const TextStyle(
-                  //             color: Colors.white,
-                  //           ),
-                  //           onChanged: (value) {},
-                  //           cursorColor: const Color(0xff5ED5A8),
-                  //           decoration: InputDecoration(
-                  //             hintText: 'Enter Your Password',
-                  //             hintStyle:
-                  //                 const TextStyle(color: Color(0xff777777)),
-                  //             fillColor: const Color(0xff161C22),
-                  //             filled: true,
-                  //             contentPadding: const EdgeInsets.symmetric(
-                  //                 vertical: 0, horizontal: 10),
-                  //             focusedBorder: UnderlineInputBorder(
-                  //               borderSide: const BorderSide(
-                  //                   color: Color(0xff5ED5A8), width: 2.0),
-                  //               borderRadius: BorderRadius.circular(12.0),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),
                 ),
-                // const SizedBox(
-                //   height: 60,
-                // ),
-                // Center(
-                //   child: MaterialButton(
-                //     minWidth: 300,
-                //     height: 60,
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, 'buyScreen');
-                //     },
-                //     color: const Color(0xff5ED5A8),
-                //     shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(16)),
-                //     child: const Text(
-                //       "Sign In",
-                //       style: TextStyle(
-                //           fontWeight: FontWeight.w400,
-                //           fontSize: 16,
-                //           color: Colors.black),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -266,7 +165,7 @@ class _SignInFormState extends State<SignInForm> {
                   color: Colors.white,
                 ),
                 validator: (value) {
-                  if (emailController.text=='') {
+                  if (emailController.text == '') {
                     return 'Email cannot be empty';
                   }
                   return null;
@@ -377,10 +276,7 @@ verifyUser(context, email, password) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password
-    }),
+    body: jsonEncode(<String, String>{'email': email, 'password': password}),
   );
   if (response.statusCode == 200) {
     logger.i(response.body);
@@ -398,4 +294,3 @@ verifyUser(context, email, password) async {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
-

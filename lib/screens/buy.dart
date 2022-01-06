@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titans_crypto/models/coin_model.dart';
+import 'package:titans_crypto/services/coin_service.dart';
 import '../assets/constants.dart' as constants;
 
 var logger = Logger();
@@ -16,48 +18,13 @@ class BuyScreen extends StatefulWidget {
 }
 
 class _BuyScreenState extends State<BuyScreen> {
-  // final List<List<String>> entries = <List<String>>[
-  //   ['bitcoin', 'btc', '47680.00', '-0.18%']
-  // ];
+  Future<List<Coin>>? coinData;
 
-  // final _info = {
-  //   "id": "bitcoin",
-  //   "symbol": "btc",
-  //   "name": "Bitcoin",
-  //   "image":
-  //       "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-  //   "current_price": 47680,
-  //   "market_cap": 901696812037,
-  //   "market_cap_rank": 1,
-  //   "fully_diluted_valuation": 1001084214499,
-  //   "total_volume": 25395765143,
-  //   "high_24h": 47860,
-  //   "low_24h": 46224,
-  //   "price_change_24h": -88.042435179777,
-  //   "price_change_percentage_24h": -0.18431,
-  //   "market_cap_change_24h": -2130934991.9030762,
-  //   "market_cap_change_percentage_24h": -0.23577,
-  //   "circulating_supply": 18915125,
-  //   "total_supply": 21000000,
-  //   "max_supply": 21000000,
-  //   "ath": 69045,
-  //   "ath_change_percentage": -30.6829,
-  //   "ath_date": "2021-11-10T14:24:11.849Z",
-  //   "atl": 67.81,
-  //   "atl_change_percentage": 70480.35746,
-  //   "atl_date": "2013-07-06T00:00:00.000Z",
-  //   "roi": '',
-  //   "last_updated": "2021-12-30T17:10:18.306Z",
-  // };
-  //
-  // get info => _info;
-  //
-  // Map convert() {
-  //   print("yes");
-  //   Map<String, dynamic> coin = jsonDecode(info);
-  //   print(coin);
-  //   return coin;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    coinData = fetchCoinDummyData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +44,10 @@ class _BuyScreenState extends State<BuyScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('walletScreen');
+            onPressed: () async {
+              //Navigator.of(context).pushNamed('walletScreen');
+              logger.i(coinData);
+              //logger.i(await fetchCoinDummyData());
             },
             icon: const Icon(
               Icons.arrow_forward_ios,
@@ -148,83 +117,117 @@ class _BuyScreenState extends State<BuyScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, position) {
-                      return Container(
-                        padding:
-                            const EdgeInsets.only(left: 20, top: 29, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-                              height: 44,
-                              width: 44,
-                            ),
-                            const SizedBox(
-                              width: 13,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Bitcoin",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16,
+                  child: FutureBuilder<List<Coin>>(
+                    future: coinData,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Coin>? data = snapshot.data;
+                        return ListView.builder(
+                          itemCount: data?.length,
+                          itemBuilder: (context, index) {
+                            Color marketColor;
+                            String marketImage;
+                            if ((data?[index].changePercentage ?? 0) >= 0) {
+                              marketColor = const Color(0xff5ED5A8);
+                              marketImage = "assets/images/increasing.png";
+                            } else {
+                              marketColor = const Color(0xffDD4B4B);
+                              marketImage = "assets/images/decreasing.png";
+                            }
+                            return Container(
+                              padding: const EdgeInsets.only(
+                                  left: 20, top: 29, right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.network(
+                                    data?[index].image ?? '',
+                                    height: 44,
+                                    width: 44,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Text(
-                                  "BTC",
-                                  style: TextStyle(
-                                    color: Color(0xff777777),
-                                    fontSize: 16,
+                                  const SizedBox(
+                                    width: 13,
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 58,
-                            ),
-                            Image.asset(
-                              "assets/images/increasing.png",
-                              height: 33,
-                              width: 93,
-                            ),
-                            // const SizedBox(
-                            //   width: 35,
-                            // ),
-                            Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: const [
-                                Text(
-                                  "47680.00",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                  SizedBox(
+                                    width: 120,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data?[index].name ?? '',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 7,
+                                        ),
+                                        Text(
+                                          data?[index].symbol?.toUpperCase() ??
+                                              '',
+                                          style: const TextStyle(
+                                            color: Color(0xff777777),
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Text(
-                                  "-0.18%",
-                                  style: TextStyle(
-                                    color: Color(0xff5ED5A8),
-                                    fontSize: 16,
+                                  const Spacer(),
+                                  Center(
+                                    child: Image.asset(
+                                      marketImage,
+                                      height: 33,
+                                      width: 93,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
+                                  const Spacer(),
+                                  SizedBox(
+                                    width: 80,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          data?[index]
+                                                  .currentPrice
+                                                  .toString() ??
+                                              '',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 7,
+                                        ),
+                                        Text(
+                                          data?[index]
+                                                  .changePercentage
+                                                  ?.toStringAsFixed(2) ??
+                                              '',
+                                          style: TextStyle(
+                                            color: marketColor,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
                     },
                   ),
                 ),
