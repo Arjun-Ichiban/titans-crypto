@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/screens/deposit.dart';
 import 'package:titans_crypto/screens/activity.dart';
 import 'package:titans_crypto/screens/buy.dart';
 import 'package:titans_crypto/screens/profile.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         'walletScreen': (context) => WalletScreen(),
         'activityScreen': (context) => ActivityScreen(),
         'profileScreen': (context) => ProfileScreen(),
+        'depositScreen': (context) => DepositScreen(),
       },
     );
   }

@@ -45,9 +45,7 @@ class _BuyScreenState extends State<BuyScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              //Navigator.of(context).pushNamed('walletScreen');
-              logger.i(coinData);
-              //logger.i(await fetchCoinDummyData());
+              Navigator.of(context).pushNamed('walletScreen');
             },
             icon: const Icon(
               Icons.arrow_forward_ios,

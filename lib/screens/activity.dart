@@ -54,17 +54,17 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             "Deposit",
                             style: TextStyle(
                               fontSize: 18,
-                              color: const Color(0xff777777),
+                              color: Color(0xff777777),
                             ),
                           ),
                           Spacer(),
                           IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.of(context).pushNamed('depositScreen');
                             },
                             icon: const Icon(
                               Icons.arrow_forward,
