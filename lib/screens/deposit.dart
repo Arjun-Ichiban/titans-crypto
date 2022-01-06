@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/services/balance_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DepositScreen extends StatefulWidget {
   const DepositScreen({Key? key}) : super(key: key);
@@ -8,6 +10,15 @@ class DepositScreen extends StatefulWidget {
 }
 
 class _DepositScreenState extends State<DepositScreen> {
+  Future<String>? walletBalance;
+
+  @override
+  void initState() {
+    super.initState();
+    walletBalance = getWalletBalance();
+    logger.i(walletBalance);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +40,7 @@ class _DepositScreenState extends State<DepositScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, top:10),
+            padding: const EdgeInsets.only(left: 20, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -66,13 +77,33 @@ class _DepositScreenState extends State<DepositScreen> {
                           SizedBox(
                             height: 15,
                           ),
-                          Text(
-                            "\u{20B9} 40,095.00",
-                            style: TextStyle(
-                              fontSize: 34,
-                              color: Colors.white,
-                            ),
+                          FutureBuilder<String>(
+                            future: walletBalance,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                String? data = snapshot.data;
+                                logger.i(data);
+                                return Text(
+                                  "\u{20B9} ${data?? 0}",
+                                  style: TextStyle(
+                                    fontSize: 34,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('error');
+                              }
+                              // By default, show a loading spinner.
+                              return const CircularProgressIndicator();
+                            },
                           ),
+                          // Text(
+                          //   "\u{20B9} 40,095.00",
+                          //   style: TextStyle(
+                          //     fontSize: 34,
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],
@@ -92,7 +123,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   height: 60,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left:10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     'Amount',
                     style: TextStyle(
@@ -142,8 +173,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   child: MaterialButton(
                     minWidth: 200,
                     height: 60,
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     color: const Color(0xff5ED5A8),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
