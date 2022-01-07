@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:titans_crypto/services/balance_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titans_crypto/services/transaction_service.dart' as transaction;
 
 class DepositScreen extends StatefulWidget {
   const DepositScreen({Key? key}) : super(key: key);
@@ -16,7 +18,6 @@ class _DepositScreenState extends State<DepositScreen> {
   void initState() {
     super.initState();
     walletBalance = getWalletBalance();
-    logger.i(walletBalance);
   }
 
   @override
@@ -84,26 +85,24 @@ class _DepositScreenState extends State<DepositScreen> {
                                 String? data = snapshot.data;
                                 logger.i(data);
                                 return Text(
-                                  "\u{20B9} ${data?? 0}",
+                                  "\u{20B9} ${data ?? 0}",
                                   style: TextStyle(
                                     fontSize: 34,
                                     color: Colors.white,
                                   ),
                                 );
                               } else if (snapshot.hasError) {
-                                return Text('error');
+                                return Text(
+                                  'error',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                );
                               }
                               // By default, show a loading spinner.
                               return const CircularProgressIndicator();
                             },
                           ),
-                          // Text(
-                          //   "\u{20B9} 40,095.00",
-                          //   style: TextStyle(
-                          //     fontSize: 34,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],
@@ -134,59 +133,7 @@ class _DepositScreenState extends State<DepositScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(top: 20, right: 20),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: const Color(0xff161C22),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: TextFormField(
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Enter The Amount',
-                            style: TextStyle(
-                              fontFamily: 'montserrat',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: const Color(0xff777777),
-                            ),
-                          ),
-                          border: InputBorder.none,
-                          fillColor: const Color(0xff161C22),
-                          filled: true,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: MaterialButton(
-                    minWidth: 200,
-                    height: 60,
-                    onPressed: () {},
-                    color: const Color(0xff5ED5A8),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    child: const Text(
-                      "Deposit",
-                      style: TextStyle(
-                          fontFamily: 'montserrat',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20,
-                          color: Colors.black),
-                    ),
-                  ),
-                ),
+                TransactionForm(),
               ],
             ),
           ),
@@ -194,4 +141,159 @@ class _DepositScreenState extends State<DepositScreen> {
       ),
     );
   }
+}
+
+class TransactionForm extends StatefulWidget {
+  const TransactionForm({Key? key}) : super(key: key);
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final _formKey = GlobalKey<FormState>();
+  num? amount = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 20, right: 20),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: TextFormField(
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                ],
+                initialValue: '0',
+                validator: (value) {
+                  if (value == '') {
+                    return 'Amount cannot be empty';
+                  } else if (value == '0') {
+                    return 'Amount cannot be 0';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  amount = double.parse(value ?? '0');
+                },
+                decoration: const InputDecoration(
+                  label: Text(
+                    'Enter The Amount',
+                    style: TextStyle(
+                      fontFamily: 'montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Color(0xff777777),
+                    ),
+                  ),
+                  helperText: ' ',
+                  border: InputBorder.none,
+                  fillColor: Color(0xff161C22),
+                  filled: true,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Center(
+            child: MaterialButton(
+              minWidth: 200,
+              height: 60,
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  logger.i([amount]);
+                  bool status = await transaction.walletTransaction(
+                      context, amount, 'deposit');
+                  showMyDialog(context);
+                }
+              },
+              color: const Color(0xff5ED5A8),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              child: const Text(
+                "Deposit",
+                style: TextStyle(
+                    fontFamily: 'montserrat',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Future<void> showMyDialog(context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Center(
+          child: Text(
+            'Transaction Status',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+        backgroundColor: const Color(0xff1B232A),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              Icon(
+                Icons.check,
+                color: Color(0xff5ED5A8),
+                size: 40,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: Text(
+                  'Successful',
+                  style: TextStyle(
+                    color: Color(0xff5ED5A8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xff5ED5A8),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  'activityScreen', (Route<dynamic> route) => false);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

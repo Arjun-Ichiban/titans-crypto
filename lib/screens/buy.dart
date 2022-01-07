@@ -132,6 +132,22 @@ class _BuyScreenState extends State<BuyScreen> {
                               marketColor = const Color(0xffDD4B4B);
                               marketImage = "assets/images/decreasing.png";
                             }
+                            num? price = data?[index].currentPrice;
+                            String formattedPrice = '';
+                            if(price!=null){
+                              if(price<10){
+                                formattedPrice = price.toStringAsFixed(5);
+                              }
+                              else if(price<100){
+                                formattedPrice = price.toStringAsFixed(3);
+                              }
+                              else if(price<100000){
+                                formattedPrice = price.toStringAsFixed(2);
+                              }
+                              else{
+                                formattedPrice = price.toStringAsFixed(1);
+                              }
+                            }
                             return Container(
                               padding: const EdgeInsets.only(
                                   left: 20, top: 29, right: 20),
@@ -190,10 +206,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          data?[index]
-                                                  .currentPrice
-                                                  .toString() ??
-                                              '',
+                                          formattedPrice,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
