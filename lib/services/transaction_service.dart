@@ -26,3 +26,21 @@ Future<bool> walletTransaction(context, amount, transType) async {
     return false;
   }
 }
+
+Future<bool> walletTransactionList() async {
+  final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getInt('user_id') ?? 0;
+  final http.Response response = await http.get(
+    Uri.parse(url + "/user/$userId/wallet-transaction-list"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }
+  );
+  if (response.statusCode == 200) {
+    logger.i('Transaction List Received');
+    return true;
+  } else {
+    logger.e('Transaction List Not Received');
+    return false;
+  }
+}

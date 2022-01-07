@@ -1,9 +1,3 @@
-import 'package:logger/logger.dart';
-import '../assets/constants.dart' as constants;
-
-var logger = Logger();
-const String apiKey = constants.apiKey;
-
 class Coin {
   final String? id;
   final String? symbol;
