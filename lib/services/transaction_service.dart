@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titans_crypto/models/wallet_transaction_model.dart';
 import '../assets/constants.dart' as constants;
 
 var logger = Logger();
@@ -27,7 +28,7 @@ Future<bool> walletTransaction(context, amount, transType) async {
   }
 }
 
-Future<bool> walletTransactionList() async {
+Future<List<WalletTransaction>> walletTransactionList() async {
   final prefs = await SharedPreferences.getInstance();
   final userId = prefs.getInt('user_id') ?? 0;
   final http.Response response = await http.get(
@@ -37,10 +38,9 @@ Future<bool> walletTransactionList() async {
     }
   );
   if (response.statusCode == 200) {
-    logger.i('Transaction List Received');
-    return true;
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((data) => WalletTransaction.fromJson(data)).toList();
   } else {
-    logger.e('Transaction List Not Received');
-    return false;
+    throw Exception('Unexpected error occurred!');
   }
 }
