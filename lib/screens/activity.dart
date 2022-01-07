@@ -100,7 +100,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           Spacer(),
                           IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.of(context).pushNamed('withdrawScreen');
                             },
                             icon: const Icon(
                               Icons.arrow_forward,

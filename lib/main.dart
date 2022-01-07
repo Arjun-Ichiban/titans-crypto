@@ -8,6 +8,7 @@ import 'package:titans_crypto/screens/signIn.dart';
 import 'package:titans_crypto/screens/signUp.dart';
 import 'package:titans_crypto/screens/wallet.dart';
 import 'package:titans_crypto/screens/welcome.dart';
+import 'package:titans_crypto/screens/withdraw.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         'activityScreen': (context) => ActivityScreen(),
         'profileScreen': (context) => ProfileScreen(),
         'depositScreen': (context) => DepositScreen(),
+        'withdrawScreen': (context) => WithdrawScreen(),
       },
     );
   }

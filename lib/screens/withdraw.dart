@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:titans_crypto/services/balance_service.dart';
 import 'package:titans_crypto/services/transaction_service.dart' as transaction;
 
-class DepositScreen extends StatefulWidget {
-  const DepositScreen({Key? key}) : super(key: key);
+class WithdrawScreen extends StatefulWidget {
+  const WithdrawScreen({Key? key}) : super(key: key);
 
   @override
-  _DepositScreenState createState() => _DepositScreenState();
+  _WithdrawScreenState createState() => _WithdrawScreenState();
 }
 
-class _DepositScreenState extends State<DepositScreen> {
+class _WithdrawScreenState extends State<WithdrawScreen> {
   Future<String>? walletBalance;
 
   @override
@@ -112,9 +112,9 @@ class _DepositScreenState extends State<DepositScreen> {
                 ),
                 Center(
                   child: Icon(
-                    Icons.arrow_circle_up_sharp,
+                    Icons.arrow_circle_down_sharp,
                     size: 100,
-                    color: const Color(0xff5ED5A8),
+                    color: const Color(0xffDD4B4B),
                   ),
                 ),
                 SizedBox(
@@ -214,7 +214,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   _formKey.currentState!.save();
                   logger.i([amount]);
                   bool status = await transaction.walletTransaction(
-                      context, amount, 'deposit');
+                      context, amount, 'withdraw');
                   showMyDialog(context);
                 }
               },
@@ -222,7 +222,7 @@ class _TransactionFormState extends State<TransactionForm> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               child: const Text(
-                "Deposit",
+                "Withdraw",
                 style: TextStyle(
                     fontFamily: 'montserrat',
                     fontWeight: FontWeight.w400,

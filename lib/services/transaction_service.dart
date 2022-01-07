@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
@@ -24,7 +23,6 @@ Future<bool> walletTransaction(context, amount, transType) async {
     return true;
   } else {
     logger.e('Transaction Failed');
-    //ScaffoldMessenger.of(context).showSnackBar(snackBar);
     return false;
   }
 }
