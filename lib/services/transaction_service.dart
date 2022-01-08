@@ -47,8 +47,8 @@ Future<List<WalletTransaction>> walletTransactionList() async {
 }
 
 Future<bool> coinTransaction(
-    context, coinId, amount, noOfCoins, transType, imageUrl) async {
-  logger.i([coinId, amount, noOfCoins, transType, imageUrl]);
+    context, coinId, amount, noOfCoins, transType, coinName, coinSymbol, imageUrl) async {
+  logger.i([coinId, amount, noOfCoins, transType,  coinName, coinSymbol, imageUrl]);
   final prefs = await SharedPreferences.getInstance();
   final userId = prefs.getInt('user_id') ?? 0;
   final http.Response response = await http.post(
@@ -61,6 +61,8 @@ Future<bool> coinTransaction(
       'amount': amount,
       'no_of_coins': noOfCoins,
       'type': transType,
+      'coin_name': coinName,
+      'coin_symbol': coinSymbol,
       'image_url': imageUrl
     }),
   );

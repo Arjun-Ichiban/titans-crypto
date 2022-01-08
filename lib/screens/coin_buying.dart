@@ -312,7 +312,14 @@ class _BuyingFormState extends State<BuyingForm> {
                   amount = double.parse(inrController.text);
                   noOfCoins = double.parse(coinController.text);
                   bool status = await transaction.coinTransaction(
-                      context, coin?.id, amount, noOfCoins, 'buy', coin?.image);
+                      context,
+                      coin?.id,
+                      amount,
+                      noOfCoins,
+                      'buy',
+                      coin?.name,
+                      coin?.symbol,
+                      coin?.image);
                   if (status) {
                     showMyDialog(context, 'buyScreen');
                   }
