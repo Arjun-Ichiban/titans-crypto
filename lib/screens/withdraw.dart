@@ -132,7 +132,24 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                     ),
                   ),
                 ),
-                TransactionForm(),
+                FutureBuilder<String>(
+                  future: walletBalance,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      String? data = snapshot.data;
+                      return TransactionForm(balance: data);
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        'error',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      );
+                    }
+                    // By default, show a loading spinner.
+                    return const CircularProgressIndicator();
+                  },
+                ),
               ],
             ),
           ),
@@ -143,7 +160,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
 }
 
 class TransactionForm extends StatefulWidget {
-  const TransactionForm({Key? key}) : super(key: key);
+  final String? balance;
+
+  const TransactionForm({Key? key, this.balance}) : super(key: key);
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -175,6 +194,12 @@ class _TransactionFormState extends State<TransactionForm> {
                 initialValue: '0',
                 validator: (value) {
                   if (value == '') {
+                    return 'Amount cannot be empty';
+                  } else if (value != null &&
+                      double.parse(value) >
+                          double.parse(widget.balance ?? '0')) {
+                    return 'Amount cannot be greater than balance';
+                  } else if (value == '') {
                     return 'Amount cannot be empty';
                   } else if (value == '0') {
                     return 'Amount cannot be 0';
