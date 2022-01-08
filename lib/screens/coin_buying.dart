@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:titans_crypto/assets/constants.dart';
 import 'package:titans_crypto/models/coin_model.dart';
+import 'package:titans_crypto/widgets/dialog_widget.dart';
+import 'package:titans_crypto/services/transaction_service.dart' as transaction;
 
 class CoinBuying extends StatefulWidget {
   const CoinBuying({Key? key, required this.coin}) : super(key: key);
@@ -16,6 +18,15 @@ class _CoinBuyingState extends State<CoinBuying> {
   @override
   Widget build(BuildContext context) {
     final Coin? coin = widget.coin;
+    Color percentageColor;
+    IconData percentageIcon;
+    if ((coin?.changePercentage ?? 0) < 0) {
+      percentageColor = decreaseColor;
+      percentageIcon = Icons.arrow_drop_down_sharp;
+    } else {
+      percentageColor = increaseColor;
+      percentageIcon = Icons.arrow_drop_up_sharp;
+    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -81,14 +92,14 @@ class _CoinBuyingState extends State<CoinBuying> {
                     ),
                     Spacer(),
                     Icon(
-                      Icons.arrow_drop_up_sharp,
-                      color: increaseColor,
+                      percentageIcon,
+                      color: percentageColor,
                       size: 35,
                     ),
                     Text(
                       coin?.changePercentage?.toStringAsFixed(2) ?? '',
                       style: TextStyle(
-                        color: increaseColor,
+                        color: percentageColor,
                         fontSize: 18,
                       ),
                     ),
@@ -97,8 +108,7 @@ class _CoinBuyingState extends State<CoinBuying> {
                 SizedBox(
                   height: 25,
                 ),
-
-                BuyingForm(price: coin?.currentPrice),
+                BuyingForm(coin: coin),
                 SizedBox(
                   height: 25,
                 ),
@@ -158,11 +168,6 @@ class _CoinBuyingState extends State<CoinBuying> {
                     ),
                   ],
                 ),
-                // Divider(
-                //   color: Colors.white,
-                //   height: 30,
-                //   thickness: 0.7,
-                // ),
               ],
             ),
           ),
@@ -173,9 +178,9 @@ class _CoinBuyingState extends State<CoinBuying> {
 }
 
 class BuyingForm extends StatefulWidget {
-  const BuyingForm({Key? key, required this.price}) : super(key: key);
+  const BuyingForm({Key? key, required this.coin}) : super(key: key);
 
-  final num? price;
+  final Coin? coin;
 
   @override
   _BuyingFormState createState() => _BuyingFormState();
@@ -184,6 +189,7 @@ class BuyingForm extends StatefulWidget {
 class _BuyingFormState extends State<BuyingForm> {
   final _formKey = GlobalKey<FormState>();
   num? amount = 0;
+  num? noOfCoins = 0;
 
   final inrController = TextEditingController();
   final coinController = TextEditingController();
@@ -197,7 +203,8 @@ class _BuyingFormState extends State<BuyingForm> {
 
   @override
   Widget build(BuildContext context) {
-    num? price = widget.price;
+    Coin? coin = widget.coin;
+    num? price = coin?.currentPrice;
     return Form(
       key: _formKey,
       child: Column(
@@ -215,7 +222,7 @@ class _BuyingFormState extends State<BuyingForm> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
               ],
               onChanged: (value) {
-                if(value!='') {
+                if (value != '') {
                   setState(() {
                     coinController.text =
                         (double.parse(value) / (price ?? 0)).toStringAsFixed(7);
@@ -224,14 +231,11 @@ class _BuyingFormState extends State<BuyingForm> {
               },
               validator: (value) {
                 if (value == '') {
-                  return 'Amount cannot be empty';
+                  return 'Cannot be empty';
                 } else if (value == '0') {
-                  return 'Amount cannot be 0';
+                  return 'Cannot be 0';
                 }
                 return null;
-              },
-              onSaved: (value) {
-                amount = double.parse(value ?? '0');
               },
               decoration: const InputDecoration(
                 label: Text(
@@ -263,7 +267,7 @@ class _BuyingFormState extends State<BuyingForm> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
               ],
               onChanged: (value) {
-                if(value!='') {
+                if (value != '') {
                   setState(() {
                     inrController.text =
                         (double.parse(value) * (price ?? 0)).toStringAsFixed(2);
@@ -278,12 +282,9 @@ class _BuyingFormState extends State<BuyingForm> {
                 }
                 return null;
               },
-              onSaved: (value) {
-                amount = double.parse(value ?? '0');
-              },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  'In BTC',
+                  'In ${coin?.symbol?.toUpperCase()}',
                   style: TextStyle(
                     fontFamily: 'montserrat',
                     fontWeight: FontWeight.w600,
@@ -308,6 +309,13 @@ class _BuyingFormState extends State<BuyingForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+                  amount = double.parse(inrController.text);
+                  noOfCoins = double.parse(coinController.text);
+                  bool status = await transaction.coinTransaction(
+                      context, coin?.id, amount, noOfCoins, 'buy', coin?.image);
+                  if (status) {
+                    showMyDialog(context, 'buyScreen');
+                  }
                 }
               },
               color: const Color(0xff5ED5A8),
