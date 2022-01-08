@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titans_crypto/models/coin_transaction_model.dart';
 import 'package:titans_crypto/models/wallet_transaction_model.dart';
 import '../assets/constants.dart' as constants;
 
@@ -72,5 +73,23 @@ Future<bool> coinTransaction(
   } else {
     logger.e('Transaction Failed');
     return false;
+  }
+}
+
+Future<List<CoinTransaction>> coinTransactionList() async {
+  final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getInt('user_id') ?? 0;
+  final http.Response response = await http.get(
+      Uri.parse(url + "/user/$userId/coin-transaction-list"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse
+        .map((data) => CoinTransaction.fromJson(data))
+        .toList();
+  } else {
+    throw Exception('Unexpected error occurred!');
   }
 }
