@@ -34,7 +34,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Center(
                 child: MaterialButton(
-                  minWidth: 300,
+                  minWidth: 260,
                   height: 60,
                   onPressed: () {
                     Navigator.pushNamed(context, 'signInScreen');
@@ -46,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                     "Sign In",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: 16,
+                        fontSize: 18,
                         color: Colors.black),
                   ),
                 ),
@@ -56,7 +56,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Center(
                 child: MaterialButton(
-                  minWidth: 300,
+                  minWidth: 260,
                   height: 60,
                   onPressed: () {
                     Navigator.pushNamed(context, 'signUpScreen');
@@ -68,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                     "Sign Up",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: 16,
+                        fontSize: 18,
                         color: Colors.black),
                   ),
                 ),

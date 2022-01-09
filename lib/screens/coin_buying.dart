@@ -116,7 +116,7 @@ class _CoinBuyingState extends State<CoinBuying> {
                   'Coin Performance',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color(0xff777777),
                     fontSize: 18,
                   ),
                 ),
@@ -129,15 +129,15 @@ class _CoinBuyingState extends State<CoinBuying> {
                       '24H High',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Color(0xff777777),
                         fontSize: 17,
                       ),
                     ),
                     Spacer(),
                     Text(
                       '\u{20B9} ${coin?.currentPrice.toString() ?? ''}',
-                      style: TextStyle(
-                        color: Colors.white,
+                      style: const TextStyle(
+                        color: Color(0xff777777),
                         fontSize: 17,
                       ),
                     ),
@@ -154,15 +154,15 @@ class _CoinBuyingState extends State<CoinBuying> {
                       '24H Low',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Color(0xff777777),
                         fontSize: 17,
                       ),
                     ),
                     Spacer(),
                     Text(
                       '\u{20B9} ${coin?.currentPrice.toString() ?? ''}',
-                      style: TextStyle(
-                        color: Colors.white,
+                      style: const TextStyle(
+                        color: Color(0xff777777),
                         fontSize: 17,
                       ),
                     ),

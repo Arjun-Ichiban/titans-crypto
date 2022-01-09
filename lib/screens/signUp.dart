@@ -330,7 +330,7 @@ createUser(context, username, email, password) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('user_id', res['user_id']);
     logger.i(res['user_id']);
-    Navigator.of(context).pushReplacementNamed('buyScreen');
+    Navigator.of(context).pushReplacementNamed('mainScreen');
   } else {
     logger.e('Failed to create user.');
     final snackBar = SnackBar(
