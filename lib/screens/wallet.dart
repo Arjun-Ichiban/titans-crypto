@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:titans_crypto/models/coin_holding.dart';
-import 'package:titans_crypto/services/coin_holding.dart';
+import 'package:titans_crypto/services/coin_holding_service.dart';
 
 var logger = Logger();
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:titans_crypto/models/coin_holding.dart';
 import 'package:titans_crypto/models/coin_model.dart';
-import 'package:titans_crypto/services/coin_holding.dart';
+import 'package:titans_crypto/screens/coin_selling.dart';
+import 'package:titans_crypto/services/coin_holding_service.dart';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({Key? key}) : super(key: key);
@@ -130,15 +131,15 @@ class _SellScreenState extends State<SellScreen> {
                             }
                             return InkWell(
                               onTap: () {
-                                // if (data?[index] != null) {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           CoinBuying(coin: data?[index]),
-                                //     ),
-                                //   );
-                                // }
+                                if (data?[index] != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CoinSelling(coinHolding: data?[index]),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 padding: const EdgeInsets.only(
