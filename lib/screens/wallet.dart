@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:titans_crypto/models/coin_holding.dart';
+import 'package:titans_crypto/services/coin_holding.dart';
+
+var logger = Logger();
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -8,6 +13,14 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  Future<List<CoinHolding>>? coinHoldingData;
+
+  @override
+  void initState() {
+    super.initState();
+    coinHoldingData = getCoinHolding();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +39,9 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('activityScreen');
+            onPressed: () async {
+              logger.i(await getCoinHolding());
+              //Navigator.of(context).pushNamed('activityScreen');
             },
             icon: const Icon(
               Icons.arrow_forward_ios,
@@ -124,73 +138,86 @@ class _WalletScreenState extends State<WalletScreen> {
                 ),
                 SizedBox(
                   height: 450,
-                  child: ListView.builder(
-                    itemBuilder: (context, position) {
-                      return Container(
-                        padding:
-                        const EdgeInsets.only(top: 20, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-                              height: 42,
-                              width: 42,
-                            ),
-                            const SizedBox(
-                              width: 13,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Bitcoin",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 14,
+                  child: FutureBuilder<List<CoinHolding>>(
+                    future: coinHoldingData,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<CoinHolding>? data = snapshot.data;
+                        return ListView.builder(
+                          itemCount: data?.length,
+                          itemBuilder: (context, index) {
+                            var priceOfHolding = (data?[index].noOfCoins ?? 0) * (data?[index].coin?.currentPrice ?? 0 );
+                            return Container(
+                              padding: const EdgeInsets.only(top: 20, right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.network(
+                                    data?[index].coin?.image ?? '',
+                                    height: 42,
+                                    width: 42,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "BTC",
-                                  style: TextStyle(
-                                    color: Color(0xff777777),
-                                    fontSize: 14,
+                                  const SizedBox(
+                                    width: 13,
                                   ),
-                                ),
-                              ],
-                            ),
-                           const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: const [
-                                Text(
-                                  "32697.00",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 14,
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data?[index].coin?.name ?? '',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        data?[index].coin?.symbol?.toUpperCase() ?? '',
+                                        style: TextStyle(
+                                          color: Color(0xff777777),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "\u{20B9} 468,096.00",
-                                  style: TextStyle(
-                                    color: Color(0xff777777),
-                                    fontSize: 14,
+                                  const Spacer(),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        data?[index].noOfCoins.toString() ?? '',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "\u{20B9} $priceOfHolding",
+                                        style: TextStyle(
+                                          color: Color(0xff777777),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }
                   ),
                 ),
               ],

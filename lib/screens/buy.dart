@@ -35,21 +35,21 @@ class _BuyScreenState extends State<BuyScreen> {
         backgroundColor: const Color(0xff1B232A),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CoinBuying(
-                    coin: Coin(
-                        id: "bitcoin",
-                        symbol: "btc",
-                        name: "Bitcoin",
-                        image:
-                            "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-                        currentPrice: 3205513,
-                        changePercentage: -7.60332)),
-              ),
-            );
-            //Navigator.pushNamed(context, 'profileScreen');
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => CoinBuying(
+            //         coin: Coin(
+            //             id: "bitcoin",
+            //             symbol: "btc",
+            //             name: "Bitcoin",
+            //             image:
+            //                 "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+            //             currentPrice: 3205513,
+            //             changePercentage: -7.60332)),
+            //   ),
+            // );
+            Navigator.pushNamed(context, 'profileScreen');
           },
           icon: const Icon(
             Icons.account_circle_outlined,
