@@ -18,7 +18,7 @@ Future<String> getWalletBalance() async {
   if (response.statusCode == 200) {
     logger.i(response.body);
     Map<String, dynamic> res = jsonDecode(response.body);
-    return res['wallet_balance'].toString();
+    return res['wallet_balance'].toStringAsFixed(2);
   } else {
     throw Exception('Unexpected error occurred!');
   }
