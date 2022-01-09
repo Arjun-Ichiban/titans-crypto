@@ -13,12 +13,12 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-  Future<Map<String, dynamic>>? coinHoldingData;
+  Future<Map<String, dynamic>>? totalCurrentBalance;
 
   @override
   void initState() {
     super.initState();
-    coinHoldingData = getCoinHolding();
+    totalCurrentBalance = getTotalBalance();
   }
 
   @override
@@ -40,8 +40,7 @@ class _WalletScreenState extends State<WalletScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              logger.i(await getCoinHolding());
-              //Navigator.of(context).pushNamed('activityScreen');
+              Navigator.of(context).pushNamed('activityScreen');
             },
             icon: const Icon(
               Icons.arrow_forward_ios,
@@ -56,7 +55,7 @@ class _WalletScreenState extends State<WalletScreen> {
           child: Padding(
             padding: const EdgeInsets.only(left: 20),
             child: FutureBuilder<Map<String, dynamic>>(
-                future: coinHoldingData,
+                future: totalCurrentBalance,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     Map<String, dynamic>? data = snapshot.data;

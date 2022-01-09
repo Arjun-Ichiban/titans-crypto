@@ -11,7 +11,7 @@ import '../assets/constants.dart' as constants;
 var logger = Logger();
 const String url = constants.serverUrl;
 
-Future<Map<String, dynamic>> getCoinHolding() async {
+Future<List<CoinHolding>> getCoinHolding() async {
   final prefs = await SharedPreferences.getInstance();
   final userId = prefs.getInt('user_id') ?? 0;
   final http.Response response = await http.get(
@@ -28,24 +28,32 @@ Future<Map<String, dynamic>> getCoinHolding() async {
       for (var coin in coinData) '${coin.id}': coin,
     };
 
-    List<CoinHolding> coinHolding = jsonResponse
+    return jsonResponse
         .map((data) => CoinHolding.fromJson(data, coinMap))
         .toList();
+  } else {
+    throw Exception('Unexpected error occurred!');
+  }
+}
+
+Future<Map<String, dynamic>> getTotalBalance() async {
+  try {
+    List<CoinHolding> coinHolding = await getCoinHolding();
 
     num total = 0;
-    for(var coin in coinHolding ) {
+    for (var coin in coinHolding) {
       total = total + (coin.priceOfCoins ?? 0);
     }
 
     String rupeeBalance = await getWalletBalance();
 
-    Map<String, dynamic> data ={};
+    Map<String, dynamic> data = {};
     data['total'] = total;
     data['rupeeBalance'] = rupeeBalance;
     data['coinHolding'] = coinHolding;
 
     return data;
-  } else {
+  } catch (err) {
     throw Exception('Unexpected error occurred!');
   }
 }
