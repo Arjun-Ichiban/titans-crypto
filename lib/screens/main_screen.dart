@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:titans_crypto/screens/activity.dart';
 import 'package:titans_crypto/screens/market.dart';
-import 'package:titans_crypto/screens/wallet.dart';
+import 'package:titans_crypto/screens/balance.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

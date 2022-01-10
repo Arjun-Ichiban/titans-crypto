@@ -102,16 +102,16 @@ class _WalletScreenState extends State<WalletScreen> {
               SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Coin Balance",
                 style: TextStyle(
                   fontSize: 18,
-                  color: const Color(0xff777777),
+                  color: Color(0xff777777),
                 ),
               ),
               SizedBox(
                 height: 450,
-                child: ListView.builder(
+                child:  ListView.builder(
                   itemCount: coinHolding?.length,
                   itemBuilder: (context, index) {
                     return Container(
@@ -183,6 +183,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     );
                   },
                 ),
+
               ),
             ],
           );

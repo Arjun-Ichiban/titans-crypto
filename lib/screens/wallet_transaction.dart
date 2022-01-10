@@ -119,7 +119,18 @@ class _WalletTransactionScreenState extends State<WalletTransactionScreen> {
                     child: FutureBuilder<List<WalletTransaction>>(
                       future: transactionData,
                       builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+                        if (snapshot.hasData &&
+                            (snapshot.data?.isEmpty ?? false)) {
+                          return Center(
+                            child: Text(
+                              'No Wallet Transaction',
+                              style: TextStyle(
+                                color: Color(0xff777777),
+                                fontSize: 25,
+                              ),
+                            ),
+                          );
+                        } else if (snapshot.hasData) {
                           List<WalletTransaction>? data = snapshot.data;
                           return ListView.builder(
                             itemCount: data?.length,
@@ -199,7 +210,10 @@ class _WalletTransactionScreenState extends State<WalletTransactionScreen> {
                             },
                           );
                         } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
+                          return Text(
+                            "${snapshot.error}",
+                            style: TextStyle(color: Colors.red),
+                          );
                         } else {
                           return const Center(
                               child: CircularProgressIndicator());

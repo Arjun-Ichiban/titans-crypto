@@ -25,7 +25,18 @@ class _SellScreenState extends State<SellScreen> {
     return FutureBuilder<List<CoinHolding>>(
       future: coinHoldingData,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if(snapshot.hasData && (snapshot.data?.isEmpty ?? false)){
+          return const Center(
+            child: Text(
+              'No Coins To Sell',
+              style: TextStyle(
+                color: Color(0xff777777),
+                fontSize: 25,
+              ),
+            ),
+          );
+        }
+        else if (snapshot.hasData) {
           List<CoinHolding>? data = snapshot.data;
           return ListView.builder(
             itemCount: data?.length,
