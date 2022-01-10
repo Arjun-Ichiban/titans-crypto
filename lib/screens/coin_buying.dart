@@ -321,7 +321,7 @@ class _BuyingFormState extends State<BuyingForm> {
                       coin?.symbol,
                       coin?.image);
                   if (status) {
-                    showMyDialog(context, 'buyScreen');
+                    showMyDialog(context);
                   }
                 }
               },

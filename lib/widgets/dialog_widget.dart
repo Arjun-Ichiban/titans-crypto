@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<void> showMyDialog(context, screen) async {
+Future<void> showMyDialog(context) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -50,8 +50,8 @@ Future<void> showMyDialog(context, screen) async {
               ),
             ),
             onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  screen, (Route<dynamic> route) => false);
+              Navigator.popUntil(
+                  context, ModalRoute.withName('mainScreen'));
             },
           ),
         ],

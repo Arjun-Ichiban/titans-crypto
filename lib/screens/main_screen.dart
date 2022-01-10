@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:titans_crypto/screens/activity.dart';
-import 'package:titans_crypto/screens/buy.dart';
 import 'package:titans_crypto/screens/market.dart';
 import 'package:titans_crypto/screens/wallet.dart';
 
@@ -55,23 +54,25 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: const Color(0xff777777),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.insert_chart),
             label: 'Market',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Wallet',
+            icon: Icon(Icons.account_balance_sharp),
+            label: 'Balance',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.receipt_long_sharp),
             label: 'Activity',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
+        selectedItemColor: const Color(0xff5ED5A8),
+        backgroundColor: const Color(0xff1B232A),
       ),
     );
   }
