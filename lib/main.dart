@@ -3,6 +3,7 @@ import 'package:titans_crypto/screens/deposit.dart';
 import 'package:titans_crypto/screens/activity.dart';
 import 'package:titans_crypto/screens/buy.dart';
 import 'package:titans_crypto/screens/main_screen.dart';
+import 'package:titans_crypto/screens/market.dart';
 import 'package:titans_crypto/screens/profile.dart';
 import 'package:titans_crypto/screens/sell.dart';
 import 'package:titans_crypto/screens/signIn.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         'signInScreen': (context) => SignInScreen(),
         'signUpScreen': (context) => SignUpScreen(),
         'mainScreen': (context) => MainScreen(),
+        'marketScreen': (context) => MarketScreen(),
         'buyScreen': (context) => BuyScreen(),
         'sellScreen': (context) => SellScreen(),
         'walletScreen': (context) => WalletScreen(),

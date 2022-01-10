@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:titans_crypto/screens/activity.dart';
 import 'package:titans_crypto/screens/buy.dart';
+import 'package:titans_crypto/screens/market.dart';
 import 'package:titans_crypto/screens/wallet.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,7 +14,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    BuyScreen(),
+    //BuyScreen(),
+    MarketScreen(),
     WalletScreen(),
     ActivityScreen(),
   ];
@@ -47,13 +49,9 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: height - padding.top - padding.bottom,
-            width: width,
-            child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: _widgetOptions.elementAt(_selectedIndex)),
-          ),
+          child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              child: _widgetOptions.elementAt(_selectedIndex)),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
