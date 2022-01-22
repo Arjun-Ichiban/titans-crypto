@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/services/transaction_report_service.dart';
 import 'package:titans_crypto/widgets/transaction_chart.dart';
 
 class TransactionReportScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class TransactionReportScreen extends StatefulWidget {
 class _TransactionReportScreenState extends State<TransactionReportScreen> {
   @override
   Widget build(BuildContext context) {
+    transactionReport();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
