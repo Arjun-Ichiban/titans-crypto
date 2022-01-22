@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
         backgroundColor: const Color(0xff1B232A),
         leading: IconButton(
-          padding: EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 12),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -35,18 +35,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: Color(0xff5ED5A8),
           ),
         ),
-        title: Text(
+        title: const Text(
           "Profile",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 19,
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            padding: const EdgeInsets.only(right: 20),
+            onPressed: () {
+              Navigator.pushNamed(context, 'transactionReportScreen');
+            },
+            icon: const Icon(
+              Icons.bar_chart_sharp,
+              size: 30,
+              color: Color(0xff5ED5A8),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

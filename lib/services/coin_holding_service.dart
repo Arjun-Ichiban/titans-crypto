@@ -22,7 +22,7 @@ Future<List<CoinHolding>> getCoinHolding() async {
   if (response.statusCode == 200) {
     logger.i(response.body);
     List jsonResponse = json.decode(response.body);
-    List<Coin> coinData = await fetchCoinDummyData();
+    List<Coin> coinData = await fetchData();
 
     Map<String, dynamic> coinMap = {
       for (var coin in coinData) '${coin.id}': coin,

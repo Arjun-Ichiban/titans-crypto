@@ -21,7 +21,7 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   void initState() {
     super.initState();
-    coinData = fetchCoinDummyData();
+    coinData = fetchData();
   }
 
   @override
