@@ -1,19 +1,11 @@
+import 'package:charts_flutter/flutter.dart' as charts;
+
 class TransactionReport {
   final String? transType;
   num? totalAmount;
   String? totalCount;
+  final charts.Color? barColor;
 
-  TransactionReport({
-    this.transType,
-    this.totalAmount,
-    this.totalCount,
-  });
-
-  factory TransactionReport.fromJson(Map<String, dynamic> json) {
-    return TransactionReport(
-      transType: json['trans_type'],
-      totalAmount: json['total_sum'],
-      totalCount: json['total_count'],
-    );
-  }
+  TransactionReport(
+      {this.transType, this.totalAmount, this.totalCount, this.barColor});
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titans_crypto/models/transaction_report_model.dart';
 import 'package:titans_crypto/services/transaction_report_service.dart';
 import 'package:titans_crypto/widgets/transaction_chart.dart';
 
@@ -11,6 +12,15 @@ class TransactionReportScreen extends StatefulWidget {
 }
 
 class _TransactionReportScreenState extends State<TransactionReportScreen> {
+
+  Future<List<TransactionReport>>? chartData;
+
+  @override
+  void initState() {
+    super.initState();
+    chartData = transactionReport();
+  }
+
   @override
   Widget build(BuildContext context) {
     transactionReport();
@@ -45,7 +55,20 @@ class _TransactionReportScreenState extends State<TransactionReportScreen> {
               padding: EdgeInsets.all(5),
               //color: Colors.white,
               height: 400,
-              child: SimpleBarChart.withSampleData(),
+              child: FutureBuilder<List<TransactionReport>>(
+                future: chartData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<TransactionReport>? data = snapshot.data;
+                    return TransactionBarChart(barChartData: data ?? []);
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              )
+              //child: TransactionBarChart.withSampleData(),
             ),
           ),
         ),
